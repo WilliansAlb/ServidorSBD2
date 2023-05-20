@@ -4,6 +4,15 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 
+let host = '192.168.10.101';
+const dbCredentials = {
+    host: '192.168.10.101',
+    port: '3306',
+    user: 'clusadmin',
+    password: 'admin',
+    database: 'libreriaSBD2'
+};
+
 const app = express();
 app.use(bodyParser.json());
 const port = 3000; // Puerto en el que se ejecutará el servidor
@@ -16,14 +25,7 @@ app.get('/', (req, res) => {
     res.render("index");
 });
 app.get('/obtener-categorias', (req, res) => {
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
-
+    const connection = mysql.createConnection(dbCredentials);
     connection.connect((err) => {
         if (err) {
             console.error('Error al conectar a MySQL:', err);
@@ -43,13 +45,7 @@ app.get('/obtener-categorias', (req, res) => {
 });
 
 app.get('/obtener-autores', (req, res) => {
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
+    const connection = mysql.createConnection(dbCredentials);
 
     connection.connect((err) => {
         if (err) {
@@ -70,13 +66,7 @@ app.get('/obtener-autores', (req, res) => {
 });
 
 app.get('/autores', (req, res) => {
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
+    const connection = mysql.createConnection(dbCredentials);
 
     connection.connect((err) => {
         if (err) {
@@ -97,13 +87,7 @@ app.get('/autores', (req, res) => {
 });
 
 app.get('/categorias', (req, res) => {
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
+    const connection = mysql.createConnection(dbCredentials);
 
     connection.connect((err) => {
         if (err) {
@@ -133,13 +117,7 @@ app.get('/libros', (req, res) => {
         queryBuscar = "SELECT SUBSTRING(l.titulo, 1,25)  AS titulo, l.fecha_publicacion AS fecha, c.nombre AS categoria, a.nombre AS autor FROM libro l inner join categoria c ON (l.categoria_id = c.id) inner join autor a ON (l.autor_id = a.id) WHERE c.id = " + req.query.filtro;
     }
     console.log(req.query.filtro);
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
+    const connection = mysql.createConnection(dbCredentials);
 
     connection.connect((err) => {
         if (err) {
@@ -170,13 +148,7 @@ app.get('/buscar-libro', (req, res) => {
     var queryBuscar = "SELECT l.titulo AS titulo, l.fecha_publicacion AS fecha, c.nombre AS categoria, a.nombre AS autor FROM libro l inner join categoria c ON (l.categoria_id = c.id) inner join autor a ON (l.autor_id = a.id) "
         + `WHERE c.nombre LIKE '%${buscada}%' OR a.nombre LIKE '%${buscada}%' OR l.titulo LIKE '%${buscada}%' OR l.fecha_publicacion LIKE '%${buscada}%';`;
     console.log(queryBuscar);
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
+    const connection = mysql.createConnection(dbCredentials);
 
     connection.connect((err) => {
         if (err) {
@@ -208,13 +180,7 @@ app.get('/buscar-autor', (req, res) => {
     var queryBuscar = "SELECT * FROM autor "
         + `WHERE nombre LIKE '%${buscada}%';`;
 
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
+    const connection = mysql.createConnection(dbCredentials);
 
     connection.connect((err) => {
         if (err) {
@@ -238,13 +204,7 @@ app.get('/buscar-categoria', (req, res) => {
     var queryBuscar = "SELECT * FROM categoria "
         + `WHERE nombre LIKE '%${buscada}%';`;
 
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
+    const connection = mysql.createConnection(dbCredentials);
 
     connection.connect((err) => {
         if (err) {
@@ -271,13 +231,7 @@ app.post('/insertar-libro', (req, res) => {
     const { titulo, fecha_publicacion, categoria_id, autor_id } = req.body;
     const libro = { titulo, fecha_publicacion, categoria_id, autor_id };
 
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
+    const connection = mysql.createConnection(dbCredentials);
 
     connection.connect((err) => {
         if (err) {
@@ -304,13 +258,7 @@ app.post('/insertar-autor', (req, res) => {
     const { nombre } = req.body;
     const autor = { nombre };
 
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
+    const connection = mysql.createConnection(dbCredentials);
 
     connection.connect((err) => {
         if (err) {
@@ -337,14 +285,7 @@ app.post('/insertar-categoria', (req, res) => {
     const { nombre } = req.body;
     const categoria = { nombre };
 
-    const connection = mysql.createConnection({
-        host: '192.168.205.131',
-        port: '3306',
-        user: 'clusadmin',
-        password: 'admin',
-        database: 'libreriaSBD2'
-    });
-
+    const connection = mysql.createConnection(dbCredentials);
     connection.connect((err) => {
         if (err) {
             console.error('Error al conectar a MySQL:', err);
@@ -373,4 +314,3 @@ app.post('/insertar-categoria', (req, res) => {
 app.listen(port, () => {
     console.log(`Servidor iniciado en el puerto ${port}`);
 });
-
