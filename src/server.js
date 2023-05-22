@@ -4,13 +4,14 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 
-let host = '192.168.10.101';
+let host = '30.30.30.10';
 const dbCredentials = {
-    host: '192.168.10.101',
+    host: host,
     port: '3306',
     user: 'clusadmin',
     password: 'admin',
-    database: 'libreriaSBD2'
+    database: 'libreriaSBD2',
+    connectTimeout: 20000
 };
 
 const app = express();
